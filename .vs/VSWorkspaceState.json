@@ -1,7 +1,9 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\Practice",
+    "\\Practice\\Practice"
   ],
-  "SelectedNode": "\\C:\\Users\\chint\\source\\repos\\C#",
+  "SelectedNode": "\\Practice\\Practice\\Program.cs",
   "PreviewInSolutionExplorer": false
 }
