@@ -1,0 +1,7 @@
+C:\Users\chint\source\repos\Task1\Task1\bin\Debug\Task1.exe
+C:\Users\chint\source\repos\Task1\Task1\bin\Debug\Task1.exe.config
+C:\Users\chint\source\repos\Task1\Task1\obj\Debug\Task1.csproj.AssemblyReference.cache
+C:\Users\chint\source\repos\Task1\Task1\obj\Debug\Task1.csproj.SuggestedBindingRedirects.cache
+C:\Users\chint\source\repos\Task1\Task1\obj\Debug\Task1.csproj.CoreCompileInputs.cache
+C:\Users\chint\source\repos\Task1\Task1\obj\Debug\Task1.exe
+C:\Users\chint\source\repos\Task1\Task1\obj\Debug\Task1.pdb

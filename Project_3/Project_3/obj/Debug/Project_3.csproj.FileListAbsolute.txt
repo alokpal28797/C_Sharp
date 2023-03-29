@@ -1,0 +1,8 @@
+C:\Users\chint\source\repos\Project_3\Project_3\bin\Debug\Project_3.exe.config
+C:\Users\chint\source\repos\Project_3\Project_3\bin\Debug\Project_3.exe
+C:\Users\chint\source\repos\Project_3\Project_3\bin\Debug\Project_3.pdb
+C:\Users\chint\source\repos\Project_3\Project_3\obj\Debug\Project_3.csproj.AssemblyReference.cache
+C:\Users\chint\source\repos\Project_3\Project_3\obj\Debug\Project_3.csproj.SuggestedBindingRedirects.cache
+C:\Users\chint\source\repos\Project_3\Project_3\obj\Debug\Project_3.csproj.CoreCompileInputs.cache
+C:\Users\chint\source\repos\Project_3\Project_3\obj\Debug\Project_3.exe
+C:\Users\chint\source\repos\Project_3\Project_3\obj\Debug\Project_3.pdb

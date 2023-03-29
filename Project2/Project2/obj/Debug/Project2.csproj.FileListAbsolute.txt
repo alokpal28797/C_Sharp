@@ -1,0 +1,8 @@
+C:\Users\chint\source\repos\Project2\Project2\bin\Debug\Project2.exe.config
+C:\Users\chint\source\repos\Project2\Project2\bin\Debug\Project2.exe
+C:\Users\chint\source\repos\Project2\Project2\bin\Debug\Project2.pdb
+C:\Users\chint\source\repos\Project2\Project2\obj\Debug\Project2.csproj.AssemblyReference.cache
+C:\Users\chint\source\repos\Project2\Project2\obj\Debug\Project2.csproj.SuggestedBindingRedirects.cache
+C:\Users\chint\source\repos\Project2\Project2\obj\Debug\Project2.csproj.CoreCompileInputs.cache
+C:\Users\chint\source\repos\Project2\Project2\obj\Debug\Project2.exe
+C:\Users\chint\source\repos\Project2\Project2\obj\Debug\Project2.pdb
