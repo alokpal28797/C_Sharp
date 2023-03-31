@@ -1,0 +1,8 @@
+C:\Users\chint\source\repos\Project_7\Project_7\bin\Debug\Project_7.exe.config
+C:\Users\chint\source\repos\Project_7\Project_7\bin\Debug\Project_7.exe
+C:\Users\chint\source\repos\Project_7\Project_7\bin\Debug\Project_7.pdb
+C:\Users\chint\source\repos\Project_7\Project_7\obj\Debug\Project_7.csproj.AssemblyReference.cache
+C:\Users\chint\source\repos\Project_7\Project_7\obj\Debug\Project_7.csproj.SuggestedBindingRedirects.cache
+C:\Users\chint\source\repos\Project_7\Project_7\obj\Debug\Project_7.csproj.CoreCompileInputs.cache
+C:\Users\chint\source\repos\Project_7\Project_7\obj\Debug\Project_7.exe
+C:\Users\chint\source\repos\Project_7\Project_7\obj\Debug\Project_7.pdb
