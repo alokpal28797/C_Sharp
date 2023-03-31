@@ -9,3 +9,14 @@ C:\Users\chint\source\repos\Preoject_5\Preoject_5\obj\Debug\Preoject_5.pdb
 C:\Users\chint\source\repos\Preoject_5\Preoject_5\bin\Debug\Newtonsoft.Json.dll
 C:\Users\chint\source\repos\Preoject_5\Preoject_5\bin\Debug\Newtonsoft.Json.xml
 C:\Users\chint\source\repos\Preoject_5\Preoject_5\obj\Debug\Preoject_5.csproj.CopyComplete
+C:\Users\chint\source\repos\C#\Preoject_5\Preoject_5\bin\Debug\Preoject_5.exe.config
+C:\Users\chint\source\repos\C#\Preoject_5\Preoject_5\bin\Debug\Preoject_5.exe
+C:\Users\chint\source\repos\C#\Preoject_5\Preoject_5\bin\Debug\Preoject_5.pdb
+C:\Users\chint\source\repos\C#\Preoject_5\Preoject_5\bin\Debug\Newtonsoft.Json.dll
+C:\Users\chint\source\repos\C#\Preoject_5\Preoject_5\bin\Debug\Newtonsoft.Json.xml
+C:\Users\chint\source\repos\C#\Preoject_5\Preoject_5\obj\Debug\Preoject_5.csproj.AssemblyReference.cache
+C:\Users\chint\source\repos\C#\Preoject_5\Preoject_5\obj\Debug\Preoject_5.csproj.SuggestedBindingRedirects.cache
+C:\Users\chint\source\repos\C#\Preoject_5\Preoject_5\obj\Debug\Preoject_5.csproj.CoreCompileInputs.cache
+C:\Users\chint\source\repos\C#\Preoject_5\Preoject_5\obj\Debug\Preoject_5.csproj.CopyComplete
+C:\Users\chint\source\repos\C#\Preoject_5\Preoject_5\obj\Debug\Preoject_5.exe
+C:\Users\chint\source\repos\C#\Preoject_5\Preoject_5\obj\Debug\Preoject_5.pdb

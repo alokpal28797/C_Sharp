@@ -1,6 +1,8 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Text;
@@ -36,7 +38,7 @@ namespace Project_8
             set;
         }
 
-     
+
         public string Salary { get; set; }
 
     }
@@ -45,13 +47,9 @@ namespace Project_8
     //
     public class EmployeeAdd
     {
+        SortedList<int, EmployeeRecord> employeeRecord = new SortedList<int, EmployeeRecord>();
         public void AddEmployee()
         {
-
-            // 
-            SortedList<int, EmployeeRecord>  employeeRecord = new SortedList<int, EmployeeRecord>();
-
-           
 
             EmployeeRecord employee = new EmployeeRecord();
 
@@ -73,7 +71,7 @@ namespace Project_8
 
             //5
             Console.WriteLine("Enter Phonenumber:");
-            int Phonenumber = int.Parse( Console.ReadLine());
+            int Phonenumber = int.Parse(Console.ReadLine());
 
             //6
             Console.WriteLine("Enter employee designation ( Developer, QA,):");
@@ -94,30 +92,113 @@ namespace Project_8
             Console.WriteLine("Enter Salary:");
             string Salary = Console.ReadLine();
 
-            EmployeeRecord newElement = new EmployeeRecord { FirstName = firstName , LastName = lastName , Gender = Gender , PhoneNumber = Phonenumber , EmailAddress = EmailAddress, Designation = employee.Designation };
+            // 8
+            Console.WriteLine("Enter EmployeeId:");
+            int EmployeeId =int.Parse( Console.ReadLine());
 
-            employeeRecord.Add(1, newElement);
+            EmployeeRecord newElement = new EmployeeRecord { FirstName = firstName, LastName = lastName, Gender = Gender, PhoneNumber = Phonenumber, EmailAddress = EmailAddress, Designation = employee.Designation, Salary = Salary };
 
-            foreach (KeyValuePair<int, EmployeeRecord> kvp in employeeRecord)
+            employeeRecord.Add(EmployeeId, newElement);
+
+            // serialize JSON to a string and then write string to a file
+         //   File.WriteAllText(@"C:\Users\chint\source\repos\EmployeeRecord.json", JsonConvert.SerializeObject(newElement));
+
+            // serialize JSON directly to a file
+            using (StreamWriter file = File.AppendText(@"C:\Users\chint\source\repos\EmployeeRecord.json"))
             {
-                Console.WriteLine($"Key: {kvp.Key}, FirstName: {kvp.Value.FirstName} , LastName : {kvp.Value.LastName}, Gender :{kvp.Value.Gender}   PhoneNumber : {kvp.Value.PhoneNumber}  EmailAddress : {kvp.Value.EmailAddress}  Designation : {kvp.Value.FirstName} ");
+                JsonSerializer serializer = new JsonSerializer();
+                serializer.Serialize(file, newElement);
+                Console.WriteLine("File is Serialized");
+
             }
+          
+
+
         }
+
+
+        public void DisplayRecord()
+        {
+           
+
+            using (StreamReader file = File.OpenText(@"C:\Users\chint\source\repos\EmployeeRecord.json"))
+            {
+                JsonSerializer serializer = new JsonSerializer();
+                EmployeeRecord employee = (EmployeeRecord)serializer.Deserialize(file, typeof(EmployeeRecord));
+              
+                Console.WriteLine($" FirstName: {employee.FirstName} , LastName : {employee.LastName}, Gender :{employee.Gender}   PhoneNumber : {employee.PhoneNumber}  EmailAddress : {employee.EmailAddress}  Designation : {employee.Designation}  Salary : {employee.Salary}");
+            }
+
+            
+        }
+
     }
+
+    // 
+
 
 
     internal class Program
     {
-       
+
         static void Main(string[] args)
         {
             SortedList<string, string[]> employeeRecord = new SortedList<string, string[]>();
 
 
-            EmployeeAdd employeeAdd = new EmployeeAdd();
-            employeeAdd.AddEmployee();
+
+
+
+            Console.WriteLine("Choose options");
+            Console.WriteLine("1 --> **Create a C# Console application which creates Employee record and store in json file.** ");
+
+
+
+
+
+
+
+            while (true)
+            {
+                Console.WriteLine();
+                Console.WriteLine("**Create a C# Console application which creates Employee record and store in json file.**");
+
+                string inputAddStudents = "n";
+
+                do
+                {
+                  
+                    Console.WriteLine("Select 1, 2");
+                    int userInput = int.Parse(Console.ReadLine());
+
+                    if (userInput == 1)
+                    {
+                        Console.WriteLine("1. Add Employee Record ");
+                        EmployeeAdd employeeAdd = new EmployeeAdd();
+                        employeeAdd.AddEmployee();
+                        Console.WriteLine("You want to do someting else. If Yes then type y else n for No;");
+                        inputAddStudents = Console.ReadLine();
+                    }
+                    if (userInput == 2)
+                    {
+                        Console.WriteLine("2. Display Employee Record ");
+                        EmployeeAdd employeeAdd = new EmployeeAdd();
+                        employeeAdd.DisplayRecord();
+                        Console.WriteLine("You want to do someting else. If Yes then type y else n for No;");
+                        inputAddStudents = Console.ReadLine();
+                    }
+                   
+
+                } while (inputAddStudents == "y");
+
+
+
+            }
+
+
 
 
         }
     }
 }
+

@@ -92,7 +92,7 @@ namespace Preoject_5
                             File.WriteAllText(@"C:\Users\chint\source\repos\Jake.json", JsonConvert.SerializeObject(person));
 
                             // serialize JSON directly to a file
-                            using (StreamWriter file = File.CreateText(@"C:\Users\chint\source\repos\Jake.json"))
+                            using (StreamWriter file = File.AppendText(@"C:\Users\chint\source\repos\Jake.json"))
                             {
                                 JsonSerializer serializer = new JsonSerializer();
                                 serializer.Serialize(file, person);
