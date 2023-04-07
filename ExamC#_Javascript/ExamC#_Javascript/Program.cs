@@ -94,15 +94,22 @@ namespace ExamC__Javascript
             return false;
         }
 
+        
 
 
     }
     internal class Program
     {
+       
         public enum DesignationType
         {
-            Developer,
-            QA
+            QA,
+            Sales,
+            Marketing,
+            Development,
+            HR,
+            SEO,
+
         }
 
         class EmployeeData
@@ -211,7 +218,42 @@ namespace ExamC__Javascript
                         gender = Console.ReadLine();
                     }
                 }
-                //4 
+                //4 Email address
+
+                //string filePath = ConfigurationManager.AppSettings["FilePath"];
+                //string jsonFile = "";
+
+                //if (File.Exists(filePath))
+                //{
+                //    jsonFile = File.ReadAllText(filePath);
+
+                //    var fileArray = JArray.Parse(jsonFile);
+
+                //    foreach (var em in fileArray)
+                //    {
+                //        try
+                //        {
+                //            employeeRecord.Add(em.ToObject<EmployeeData>());
+
+
+                //        }
+                //        catch (Exception ex)
+                //        {
+                //            Console.WriteLine(ex.Message);
+                //        }
+                //    }
+                //    foreach (var emp in employeeRecord)
+                //    {
+                //        Console.WriteLine(emp.EmailAddress);
+                //        Console.WriteLine(emp.Salary);
+                        
+
+                //    }
+                //}
+
+
+
+
                 Console.WriteLine("Enter EmailAddress:");
                 emailAddress = Console.ReadLine();
 
@@ -237,7 +279,10 @@ namespace ExamC__Javascript
 
 
 
-                //5
+
+
+
+                //5 Enter PhoneNumber
                 Console.WriteLine("Enter Phonenumber:");
                 phoneNumber = long.Parse(Console.ReadLine());
                 while (Validations.PhoneNumberCheck(phoneNumber) == false)
@@ -256,18 +301,17 @@ namespace ExamC__Javascript
 
                 }
 
+
+
+
                 //6 Enter employee designation ( Developer, QA,)
 
-
                 bool flag = true;
-
-
-
                 while (flag == true)
                 {
                     try
                     {
-                        Console.WriteLine("Enter employee designation ( Developer, QA,):");
+                        Console.WriteLine("Enter employee designation ( Developer, QA,Sales,HR,Marketing,SEO):");
                         designation = Console.ReadLine().ToLower().Trim();
 
                         if (Validations.EmptyNull(designation) == true)
@@ -284,9 +328,9 @@ namespace ExamC__Javascript
                             designation = Console.ReadLine().ToLower().Trim();
                         }
 
-                        if (designation.ToLower().Trim() == "developer")
+                        if (designation.ToLower().Trim() == "development")
                         {
-                            designation = Convert.ToString(DesignationType.Developer);
+                            designation = Convert.ToString(DesignationType.Development);
                             flag = false;
                         }
                         if (designation.ToLower().Trim() == "qa")
@@ -294,8 +338,26 @@ namespace ExamC__Javascript
                             designation = Convert.ToString(DesignationType.QA);
                             flag = false;
                         }
-
-
+                        if (designation.ToLower().Trim() == "sales")
+                        {
+                            designation = Convert.ToString(DesignationType.Sales);
+                            flag = false;
+                        }
+                        if (designation.ToLower().Trim() == "marketing")
+                        {
+                            designation = Convert.ToString(DesignationType.Marketing);
+                            flag = false;
+                        }
+                        if (designation.ToLower().Trim() == "hr")
+                        {
+                            designation = Convert.ToString(DesignationType.HR);
+                            flag = false;
+                        }
+                        if (designation.ToLower().Trim() == "seo")
+                        {
+                            designation = Convert.ToString(DesignationType.SEO);
+                            flag = false;
+                        }
 
                     }
                     catch (Exception ex)
@@ -356,7 +418,7 @@ namespace ExamC__Javascript
                 try
                 {
                     string filePath = ConfigurationManager.AppSettings["FilePath"];
-                   // string file = @"C:\Users\alokp\source\repos\ EmployeeData_TodayDate.json";
+                    // string file = @"C:\Users\alokp\source\repos\ EmployeeData_TodayDate.json";
                     using (StreamReader sr = new StreamReader(filePath))
                     {
                         Console.WriteLine("\nEmployee Details Areee....");
@@ -365,7 +427,9 @@ namespace ExamC__Javascript
 
                     }
                 }
-                catch (Exception ex) { }
+                catch (Exception ex) {
+                    Console.WriteLine(ex.Message);
+                }
 
                 if (employeeRecord.Count > 0)
                 {
@@ -387,6 +451,40 @@ namespace ExamC__Javascript
 
             }
 
+            public static bool DuplicteDataCheck(List<EmployeeData> employeeRecord)
+            {
+                string filePath = ConfigurationManager.AppSettings["FilePath"];
+                string jsonFile = "";
+
+                if (File.Exists(filePath))
+                {
+                    jsonFile = File.ReadAllText(filePath);
+
+                    var fileArray = JArray.Parse(jsonFile);
+
+                    foreach (var em in fileArray)
+                    {
+                        try
+                        {
+                            employeeRecord.Add(em.ToObject<EmployeeData>());
+
+
+                        }
+                        catch (Exception ex)
+                        {
+                            Console.WriteLine(ex.Message);
+                        }
+                    }
+                    foreach (var employee in employeeRecord)
+                    {
+                        Console.WriteLine(employee.EmailAddress);
+                        Console.WriteLine(employee.Salary);
+
+                    }
+                }
+
+                return true;
+            }
         }
 
         static void Main(string[] args)
@@ -409,17 +507,19 @@ namespace ExamC__Javascript
                         {
                             employeeRecord.Add(em.ToObject<EmployeeData>());
 
-                            
+
                         }
                         catch (Exception ex)
                         {
                             Console.WriteLine(ex.Message);
                         }
                     }
+                   Console.WriteLine( employeeRecord.Count());
                     foreach (var employee in employeeRecord)
                     {
                         Console.WriteLine(employee.EmailAddress);
                         Console.WriteLine(employee.Salary);
+                        
 
                     }
                 }
