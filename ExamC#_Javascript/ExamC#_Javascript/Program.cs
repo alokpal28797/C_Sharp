@@ -1,10 +1,12 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Configuration;
 using System.IO;
 using System.Linq;
+using System.Net.NetworkInformation;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -65,42 +67,37 @@ namespace ExamC__Javascript
             }
 
         }
-        public static bool PhoneNumberCheck(this long num)
+        public static bool PhoneNumberCheck(this string num)
         {
-            Regex phonenumberRegex = new Regex(@"^\+?[1-9][0-9]{9}$");
+            Regex phonenumberRegex = new Regex(@"^(\+?\d{1,2}\s)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$");
             bool checkNum = phonenumberRegex.IsMatch(num.ToString());
 
-            if (checkNum == true)
+            try
             {
-                return true;
+                if (checkNum == true)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
             }
-            else
+            catch (Exception ex)
             {
+                Console.WriteLine("**Please enter correct value**");
                 return false;
             }
+           
+            
         }
-        public static bool SalaryCheck(this long salary)
-        {
-            if (salary < 10000)
-            {
-                Console.WriteLine("Salary is Very less ( 10000)");
-                return true;
-            }
-            else if (salary > 50000)
-            {
-                Console.WriteLine("Salary is Very Much (50000)");
-                return true;
-            }
-            return false;
-        }
+    
 
-        
 
 
     }
     internal class Program
     {
-       
         public enum DesignationType
         {
             QA,
@@ -114,21 +111,21 @@ namespace ExamC__Javascript
 
         class EmployeeData
         {
-            public string FirstName { get; set; }
-            public string LastName { get; set; }
+            public string FullName { get; set; }
+         
             public string Gender { get; set; }
             public string EmailAddress { get; set; }
-            public long PhoneNumber { get; set; }
+            public string PhoneNumber { get; set; }
 
             public string Designation { get; set; }
 
             public int Salary { get; set; }
 
 
-            public EmployeeData(string firstName, string lastName, string gender, string emailAddress, long phoneNumber, string designation, int salary)
+            public EmployeeData( string fullName, string gender, string emailAddress, string phoneNumber, string designation, int salary)
             {
-                this.FirstName = firstName;
-                this.LastName = lastName;
+                this.FullName = fullName;
+                
                 this.Gender = gender;
                 this.EmailAddress = emailAddress;
                 this.PhoneNumber = phoneNumber;
@@ -139,58 +136,39 @@ namespace ExamC__Javascript
 
             public static List<EmployeeData> AddEmployees(List<EmployeeData> employeeRecord)
             {
-                string firstName = "";
-                string lastName = "";
+                string fullName = "";
                 string gender = "";
                 string emailAddress = "";
-                long phoneNumber = 0;
+                string  phoneNumber = "";
                 string designation = "";
                 int salary = 0;
 
 
-
+               Console.WriteLine( CheckDuplictes());
 
 
                 //1
-                Console.WriteLine("Enter First name:");
-                firstName = Console.ReadLine();
-                while (Validations.EmptyNull(firstName) == true || Validations.IsString(firstName) == false)
+                Console.WriteLine("Enter Full name:");
+                fullName = Console.ReadLine();
+                while (Validations.EmptyNull(fullName) == true || Validations.IsString(fullName) == false)
                 {
-                    if (Validations.EmptyNull(firstName) == true)
+                    if (Validations.EmptyNull(fullName) == true)
                     {
                         Console.WriteLine("**This Field is Required**");
-                        Console.WriteLine("Enter First name:");
-                        firstName = Console.ReadLine();
+                        Console.WriteLine("Enter fullName name:");
+                        fullName = Console.ReadLine();
 
                     }
-                    if (Validations.IsString(firstName) == false)
+                    if (Validations.IsString(fullName) == false)
                     {
                         Console.WriteLine("**Integer is not Allowed in Name **");
-                        Console.WriteLine("Enter First name:");
-                        firstName = Console.ReadLine();
+                        Console.WriteLine("Enter fullName name:");
+                        fullName = Console.ReadLine();
                     }
 
                 }
 
-                //2
-                Console.WriteLine("Enter Last name:");
-                lastName = Console.ReadLine();
-                while (Validations.EmptyNull(lastName) == true || Validations.IsString(lastName) == false)
-                {
-                    if (Validations.EmptyNull(lastName) == true)
-                    {
-                        Console.WriteLine("**This Field is Required**");
-                        Console.WriteLine("Enter Last name:");
-                        lastName = Console.ReadLine();
-
-                    }
-                    if (Validations.IsString(lastName) == false)
-                    {
-                        Console.WriteLine("**Integer is not Allowed in Name **");
-                        Console.WriteLine("Enter Last name:");
-                        lastName = Console.ReadLine();
-                    }
-                }
+               
 
                 //3
                 Console.WriteLine("Enter Gender: (F) for Female  &  (M) for Male");
@@ -218,45 +196,11 @@ namespace ExamC__Javascript
                         gender = Console.ReadLine();
                     }
                 }
-                //4 Email address
-
-                //string filePath = ConfigurationManager.AppSettings["FilePath"];
-                //string jsonFile = "";
-
-                //if (File.Exists(filePath))
-                //{
-                //    jsonFile = File.ReadAllText(filePath);
-
-                //    var fileArray = JArray.Parse(jsonFile);
-
-                //    foreach (var em in fileArray)
-                //    {
-                //        try
-                //        {
-                //            employeeRecord.Add(em.ToObject<EmployeeData>());
-
-
-                //        }
-                //        catch (Exception ex)
-                //        {
-                //            Console.WriteLine(ex.Message);
-                //        }
-                //    }
-                //    foreach (var emp in employeeRecord)
-                //    {
-                //        Console.WriteLine(emp.EmailAddress);
-                //        Console.WriteLine(emp.Salary);
-                        
-
-                //    }
-                //}
-
-
-
-
+                //4 
                 Console.WriteLine("Enter EmailAddress:");
                 emailAddress = Console.ReadLine();
 
+                //CheckDuplicate(emailAddress)
 
                 while (Validations.EmptyNull(emailAddress) == true || Validations.CorrectEmail(emailAddress) == false)
                 {
@@ -267,7 +211,7 @@ namespace ExamC__Javascript
                         emailAddress = Console.ReadLine();
 
                     }
-                    if (Validations.EmptyNull(emailAddress) == false)
+                    if (Validations.CorrectEmail(emailAddress) == false)
                     {
                         Console.WriteLine("**This is not Valid**");
                         Console.WriteLine("Enter Email Address:");
@@ -279,52 +223,58 @@ namespace ExamC__Javascript
 
 
 
-
-
-
-                //5 Enter PhoneNumber
+                //5
                 Console.WriteLine("Enter Phonenumber:");
-                phoneNumber = long.Parse(Console.ReadLine());
-                while (Validations.PhoneNumberCheck(phoneNumber) == false)
-                {
-                    try
-                    {
-                        if (Validations.PhoneNumberCheck(phoneNumber) == false)
-                        {
-                            Console.WriteLine("**PhoneNumber Should be of 10 digits**");
-                            Console.WriteLine("Enter Phonenumber:");
-                            phoneNumber = long.Parse(Console.ReadLine());
 
-                        }
+                phoneNumber = (Console.ReadLine());
+                while (Validations.PhoneNumberCheck(phoneNumber) == false  || Validations.EmptyNull(phoneNumber)== true)
+                {
+                    if (Validations.EmptyNull(phoneNumber) == true)
+                    {
+                        Console.WriteLine("**This Field is Required**");
+                        Console.WriteLine("Enter phoneNumber:");
+                        phoneNumber = Console.ReadLine();
+
                     }
-                    catch (Exception ex) { Console.WriteLine(ex.Message); }
+                    if (Validations.PhoneNumberCheck(phoneNumber) == false)
+                    {
+                        Console.WriteLine("**Please Enter Valid (10 digits) PhoneNumber **");
+                        Console.WriteLine("Enter phoneNumber:");
+                        phoneNumber = Console.ReadLine();
+
+                    }
 
                 }
 
 
 
 
+
                 //6 Enter employee designation ( Developer, QA,)
 
+
                 bool flag = true;
+
+
                 while (flag == true)
                 {
+                    Console.WriteLine("Enter employee designation ( Developer, QA,Marketing,SEO,HR,Sales):");
                     try
                     {
-                        Console.WriteLine("Enter employee designation ( Developer, QA,Sales,HR,Marketing,SEO):");
+                        //Console.WriteLine("Enter employee designation ( Developer, QA,Marketing,SEO,HR,Sales):");
                         designation = Console.ReadLine().ToLower().Trim();
 
                         if (Validations.EmptyNull(designation) == true)
                         {
                             Console.WriteLine("**This Field is Required**");
-                            Console.WriteLine("Enter employee designation ( Developer, QA,):");
+                            Console.WriteLine("Enter employee designation ( Developer, QA,Marketing,SEO,HR,Sales):");
                             designation = Console.ReadLine().ToLower().Trim();
 
                         }
                         if (Validations.IsString(designation) == false)
                         {
                             Console.WriteLine("**Integer is not Allowed in Name **");
-                            Console.WriteLine("Enter employee designation ( Developer, QA,):");
+                            Console.WriteLine("Enter employee designation ( Developer, QA,Marketing,SEO,HR,Sales):");
                             designation = Console.ReadLine().ToLower().Trim();
                         }
 
@@ -333,19 +283,9 @@ namespace ExamC__Javascript
                             designation = Convert.ToString(DesignationType.Development);
                             flag = false;
                         }
-                        if (designation.ToLower().Trim() == "qa")
-                        {
-                            designation = Convert.ToString(DesignationType.QA);
-                            flag = false;
-                        }
                         if (designation.ToLower().Trim() == "sales")
                         {
                             designation = Convert.ToString(DesignationType.Sales);
-                            flag = false;
-                        }
-                        if (designation.ToLower().Trim() == "marketing")
-                        {
-                            designation = Convert.ToString(DesignationType.Marketing);
                             flag = false;
                         }
                         if (designation.ToLower().Trim() == "hr")
@@ -356,6 +296,16 @@ namespace ExamC__Javascript
                         if (designation.ToLower().Trim() == "seo")
                         {
                             designation = Convert.ToString(DesignationType.SEO);
+                            flag = false;
+                        }
+                        if (designation.ToLower().Trim() == "qa")
+                        {
+                            designation = Convert.ToString(DesignationType.QA);
+                            flag = false;
+                        }
+                        if (designation.ToLower().Trim() == "marketing")
+                        {
+                            designation = Convert.ToString(DesignationType.Marketing);
                             flag = false;
                         }
 
@@ -376,27 +326,9 @@ namespace ExamC__Javascript
                 //7
                 Console.WriteLine("Enter employee Salary ");
                 salary = int.Parse(Console.ReadLine());
-                bool salaryFlag = true;
-                while (salaryFlag == true)
-                {
-                    try
-                    {
-                        if (Validations.SalaryCheck(salary) == true)
-                        {
-                            Console.WriteLine("Enter employee Salary ");
-                            salary = int.Parse(Console.ReadLine());
+               
 
-                        }
-                        else
-                        {
-                            salaryFlag = false;
-                        }
-                    }
-                    catch (Exception ex) { Console.WriteLine(ex.Message); }
-
-                }
-
-                EmployeeData employee = new EmployeeData(firstName, lastName, gender, emailAddress, phoneNumber, designation, salary);
+                EmployeeData employee = new EmployeeData(fullName, gender, emailAddress, phoneNumber, designation, salary);
 
                 employeeRecord.Add(employee);
                 string result = JsonConvert.SerializeObject(employeeRecord);
@@ -418,7 +350,6 @@ namespace ExamC__Javascript
                 try
                 {
                     string filePath = ConfigurationManager.AppSettings["FilePath"];
-                    // string file = @"C:\Users\alokp\source\repos\ EmployeeData_TodayDate.json";
                     using (StreamReader sr = new StreamReader(filePath))
                     {
                         Console.WriteLine("\nEmployee Details Areee....");
@@ -436,8 +367,7 @@ namespace ExamC__Javascript
                     foreach (var employee in employeeRecord)
                     {
                         Console.WriteLine("\nEmployee Details Are....");
-                        Console.WriteLine(" FirstName : " + employee.FirstName);
-                        Console.WriteLine(" LastName : " + employee.LastName);
+                        Console.WriteLine(" FirstName : " + employee.FullName);
                         Console.WriteLine(" LastName : " + employee.EmailAddress);
                         Console.WriteLine(" LastName : " + employee.PhoneNumber);
                         Console.WriteLine(" Degignation : " + employee.Designation);
@@ -451,11 +381,13 @@ namespace ExamC__Javascript
 
             }
 
-            public static bool DuplicteDataCheck(List<EmployeeData> employeeRecord)
+            public static bool CheckDuplictes()
             {
                 string filePath = ConfigurationManager.AppSettings["FilePath"];
-                string jsonFile = "";
 
+                List<string> Email = new List<string>();
+
+                string jsonFile = "";
                 if (File.Exists(filePath))
                 {
                     jsonFile = File.ReadAllText(filePath);
@@ -466,23 +398,15 @@ namespace ExamC__Javascript
                     {
                         try
                         {
-                            employeeRecord.Add(em.ToObject<EmployeeData>());
-
-
+                            Console.WriteLine(em["FullName"]);
                         }
                         catch (Exception ex)
                         {
                             Console.WriteLine(ex.Message);
                         }
                     }
-                    foreach (var employee in employeeRecord)
-                    {
-                        Console.WriteLine(employee.EmailAddress);
-                        Console.WriteLine(employee.Salary);
-
-                    }
+                    
                 }
-
                 return true;
             }
         }
@@ -494,6 +418,8 @@ namespace ExamC__Javascript
 
                 string filePath = ConfigurationManager.AppSettings["FilePath"];
 
+                List<string> Email  = new List<string>();
+
                 string jsonFile = "";
                 if (File.Exists(filePath))
                 {
@@ -514,12 +440,11 @@ namespace ExamC__Javascript
                             Console.WriteLine(ex.Message);
                         }
                     }
-                   Console.WriteLine( employeeRecord.Count());
                     foreach (var employee in employeeRecord)
                     {
                         Console.WriteLine(employee.EmailAddress);
                         Console.WriteLine(employee.Salary);
-                        
+                        Email.Add(employee.EmailAddress);
 
                     }
                 }
@@ -537,7 +462,7 @@ namespace ExamC__Javascript
                     do
                     {
 
-                        Console.WriteLine("Select 1, 2");
+                        Console.WriteLine("Select 1, 2 ,4");
                         int userInput = int.Parse(Console.ReadLine());
 
                         if (userInput == 1)
@@ -547,10 +472,16 @@ namespace ExamC__Javascript
                             Console.WriteLine("You want to do someting else. If Yes then type y else n for No;");
                             inputAddStudents = Console.ReadLine();
                         }
+                        if (userInput == 4)
+                        {
+                            Console.WriteLine("4. Display Employee Record ");
+                            EmployeeData.DisplayRecord(employeeRecord);
+                            Console.WriteLine("You want to do someting else. If Yes then type y else n for No;");
+                            inputAddStudents = Console.ReadLine();
+                        }
                         if (userInput == 2)
                         {
-                            Console.WriteLine("2. Display Employee Record ");
-                            EmployeeData.DisplayRecord(employeeRecord);
+                            Console.WriteLine("2. Delete Data");
                             Console.WriteLine("You want to do someting else. If Yes then type y else n for No;");
                             inputAddStudents = Console.ReadLine();
                         }
