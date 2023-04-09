@@ -1,0 +1,74 @@
+[
+  {
+    "FullName": "asas",
+    "Gender": "f",
+    "EmailAddress": "a@gmail.com",
+    "PhoneNumber": "1234567890",
+    "Designation": "QA",
+    "Salary": 1
+  },
+  {
+    "FullName": "a",
+    "Gender": "f",
+    "EmailAddress": "a@gmail.com",
+    "PhoneNumber": "1234567890",
+    "Designation": "QA",
+    "Salary": 2
+  },
+  {
+    "FullName": "assa",
+    "Gender": "f",
+    "EmailAddress": "a@gmail.com",
+    "PhoneNumber": "1234567890",
+    "Designation": "QA",
+    "Salary": 3
+  },
+  {
+    "FullName": "asas",
+    "Gender": "m",
+    "EmailAddress": "a@gmail.com",
+    "PhoneNumber": "1234567890",
+    "Designation": "QA",
+    "Salary": 4
+  },
+  {
+    "FullName": "asasa",
+    "Gender": "m",
+    "EmailAddress": "a@gmai.com",
+    "PhoneNumber": "1234567890",
+    "Designation": "QA",
+    "Salary": 5
+  },
+  {
+    "FullName": "asas",
+    "Gender": "m",
+    "EmailAddress": "a@gmail.com",
+    "PhoneNumber": "1234567890",
+    "Designation": "QA",
+    "Salary": 6
+  },
+  {
+    "FullName": "a",
+    "Gender": "f",
+    "EmailAddress": "a@gmail.com",
+    "PhoneNumber": "1234567890",
+    "Designation": "QA",
+    "Salary": 7
+  },
+  {
+    "FullName": "a",
+    "Gender": "f",
+    "EmailAddress": "a@gamail.com",
+    "PhoneNumber": "1234567890",
+    "Designation": "QA",
+    "Salary": 8
+  },
+  {
+    "FullName": "wqwq",
+    "Gender": "f",
+    "EmailAddress": "a@gmail.com",
+    "PhoneNumber": "1234567890",
+    "Designation": "QA",
+    "Salary": 9
+  }
+]

@@ -88,10 +88,10 @@ namespace ExamC__Javascript
                 Console.WriteLine("**Please enter correct value**");
                 return false;
             }
-           
-            
+
+
         }
-    
+
 
 
 
@@ -112,7 +112,7 @@ namespace ExamC__Javascript
         class EmployeeData
         {
             public string FullName { get; set; }
-         
+
             public string Gender { get; set; }
             public string EmailAddress { get; set; }
             public string PhoneNumber { get; set; }
@@ -122,10 +122,10 @@ namespace ExamC__Javascript
             public int Salary { get; set; }
 
 
-            public EmployeeData( string fullName, string gender, string emailAddress, string phoneNumber, string designation, int salary)
+            public EmployeeData(string fullName, string gender, string emailAddress, string phoneNumber, string designation, int salary)
             {
                 this.FullName = fullName;
-                
+
                 this.Gender = gender;
                 this.EmailAddress = emailAddress;
                 this.PhoneNumber = phoneNumber;
@@ -139,12 +139,12 @@ namespace ExamC__Javascript
                 string fullName = "";
                 string gender = "";
                 string emailAddress = "";
-                string  phoneNumber = "";
+                string phoneNumber = "";
                 string designation = "";
                 int salary = 0;
 
 
-               Console.WriteLine( CheckDuplictes());
+                // Console.WriteLine(CheckDuplictes());
 
 
                 //1
@@ -168,7 +168,7 @@ namespace ExamC__Javascript
 
                 }
 
-               
+
 
                 //3
                 Console.WriteLine("Enter Gender: (F) for Female  &  (M) for Male");
@@ -227,7 +227,7 @@ namespace ExamC__Javascript
                 Console.WriteLine("Enter Phonenumber:");
 
                 phoneNumber = (Console.ReadLine());
-                while (Validations.PhoneNumberCheck(phoneNumber) == false  || Validations.EmptyNull(phoneNumber)== true)
+                while (Validations.PhoneNumberCheck(phoneNumber) == false || Validations.EmptyNull(phoneNumber) == true)
                 {
                     if (Validations.EmptyNull(phoneNumber) == true)
                     {
@@ -326,7 +326,12 @@ namespace ExamC__Javascript
                 //7
                 Console.WriteLine("Enter employee Salary ");
                 salary = int.Parse(Console.ReadLine());
-               
+
+
+
+
+
+                // Add Data
 
                 EmployeeData employee = new EmployeeData(fullName, gender, emailAddress, phoneNumber, designation, salary);
 
@@ -358,26 +363,27 @@ namespace ExamC__Javascript
 
                     }
                 }
-                catch (Exception ex) {
+                catch (Exception ex)
+                {
                     Console.WriteLine(ex.Message);
                 }
 
-                if (employeeRecord.Count > 0)
-                {
-                    foreach (var employee in employeeRecord)
-                    {
-                        Console.WriteLine("\nEmployee Details Are....");
-                        Console.WriteLine(" FirstName : " + employee.FullName);
-                        Console.WriteLine(" LastName : " + employee.EmailAddress);
-                        Console.WriteLine(" LastName : " + employee.PhoneNumber);
-                        Console.WriteLine(" Degignation : " + employee.Designation);
-                        Console.WriteLine(" Salary : " + employee.Salary);
-                    }
-                }
-                else
-                {
-                    Console.WriteLine("There is no employees");
-                }
+                //if (employeeRecord.Count > 0)
+                //{
+                //    foreach (var employee in employeeRecord)
+                //    {
+                //        Console.WriteLine("\nEmployee Details Are....");
+                //        Console.WriteLine(" FirstName : " + employee.FullName);
+                //        Console.WriteLine(" LastName : " + employee.EmailAddress);
+                //        Console.WriteLine(" LastName : " + employee.PhoneNumber);
+                //        Console.WriteLine(" Degignation : " + employee.Designation);
+                //        Console.WriteLine(" Salary : " + employee.Salary);
+                //    }
+                //}
+                //else
+                //{
+                //    Console.WriteLine("There is no employees");
+                //}
 
             }
 
@@ -392,20 +398,30 @@ namespace ExamC__Javascript
                 {
                     jsonFile = File.ReadAllText(filePath);
 
-                    var fileArray = JArray.Parse(jsonFile);
+                    //var fileArray = JArray.Parse(jsonFile);
 
-                    foreach (var em in fileArray)
+                    //foreach (var em in fileArray)
+                    //{
+                    //    try
+                    //    {
+                    //        Console.WriteLine(em["FullName"]);
+                    //    }
+                    //    catch (Exception ex)
+                    //    {
+                    //        Console.WriteLine(ex.Message);
+                    //    }
+                    //}
+
+                    List<JObject> objects = JArray.Parse(jsonFile).Cast<JObject>().ToList();
+
+                    // Sort the list based on the "id" element
+                    objects = objects.OrderBy(o => o["Salary"]).ToList();
+
+                    foreach (JObject obj in objects)
                     {
-                        try
-                        {
-                            Console.WriteLine(em["FullName"]);
-                        }
-                        catch (Exception ex)
-                        {
-                            Console.WriteLine(ex.Message);
-                        }
+                        Console.WriteLine($"id: {obj["Salary"]}, age: {obj["age"]}");
                     }
-                    
+
                 }
                 return true;
             }
@@ -415,39 +431,45 @@ namespace ExamC__Javascript
         {
             {
                 List<EmployeeData> employeeRecord = new List<EmployeeData>();
-
+                List<EmployeeData> people = new List<EmployeeData>();
                 string filePath = ConfigurationManager.AppSettings["FilePath"];
 
-                List<string> Email  = new List<string>();
+                List<string> Email = new List<string>();
 
                 string jsonFile = "";
                 if (File.Exists(filePath))
                 {
                     jsonFile = File.ReadAllText(filePath);
 
-                    var fileArray = JArray.Parse(jsonFile);
+                    var filearray = JArray.Parse(jsonFile);
 
-                    foreach (var em in fileArray)
+                    string jsonData = File.ReadAllText(filePath);
+                    people = JsonConvert.DeserializeObject<List<EmployeeData>>(jsonData);
+
+                    foreach (var em in filearray)
                     {
                         try
                         {
                             employeeRecord.Add(em.ToObject<EmployeeData>());
-
-
                         }
                         catch (Exception ex)
                         {
                             Console.WriteLine(ex.Message);
                         }
                     }
-                    foreach (var employee in employeeRecord)
-                    {
-                        Console.WriteLine(employee.EmailAddress);
-                        Console.WriteLine(employee.Salary);
-                        Email.Add(employee.EmailAddress);
 
-                    }
+                    var sortedList = people.OrderBy(p => p.Salary);
+
+                    // Serialize the sorted list back to JSON
+                    string sortedJsonData = JsonConvert.SerializeObject(sortedList, Formatting.Indented);
+
+                    // Write the sorted data back to the file
+                    File.WriteAllText(filePath, sortedJsonData);
                 }
+
+                
+
+
 
                 Console.WriteLine("Choose options");
                 Console.WriteLine("1 --> **Create a C# Console application which creates Employee record and store in json file.** ");
@@ -485,7 +507,41 @@ namespace ExamC__Javascript
                             Console.WriteLine("You want to do someting else. If Yes then type y else n for No;");
                             inputAddStudents = Console.ReadLine();
                         }
+                        if (userInput == 3)
+                        {
+                            jsonFile = "";
+                            if (File.Exists(filePath))
+                            {
+                                jsonFile = File.ReadAllText(filePath);
 
+                                var filearray = JArray.Parse(jsonFile);
+
+                                string jsonData = File.ReadAllText(filePath);
+                                people = JsonConvert.DeserializeObject<List<EmployeeData>>(jsonData);
+
+                                foreach (var em in filearray)
+                                {
+                                    try
+                                    {
+                                        employeeRecord.Add(em.ToObject<EmployeeData>());
+                                    }
+                                    catch (Exception ex)
+                                    {
+                                        Console.WriteLine(ex.Message);
+                                    }
+                                }
+
+                                var sortedList = people.OrderBy(p => p.Salary);
+
+                                // Serialize the sorted list back to JSON
+                                string sortedJsonData = JsonConvert.SerializeObject(sortedList, Formatting.Indented);
+
+                                // Write the sorted data back to the file
+                                File.WriteAllText(filePath, sortedJsonData);
+                                inputAddStudents = "n";
+                                break;
+                            }
+                        }
 
                     } while (inputAddStudents == "y");
 
