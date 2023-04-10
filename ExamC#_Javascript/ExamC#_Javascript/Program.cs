@@ -291,7 +291,7 @@ namespace ExamC__Javascript
                     }
                     if (Validations.IsString(gender) == false)
                     {
-                        Console.WriteLine("**Integer is not Allowed in Name **");
+                        Console.WriteLine("**Integer is not Allowed in Gender **");
                         Console.Write("Enter Gender: (F) for Female  &  (M) for Male : ");
                         gender = Console.ReadLine();
                     }
@@ -307,7 +307,7 @@ namespace ExamC__Javascript
 
 
                 //4 Gender 
-                Console.Write("Enter EmailAddress : ");
+                Console.Write("Enter Email Address : ");
                 emailAddress = Console.ReadLine();
 
                 //CheckDuplicate(emailAddress)
@@ -317,7 +317,7 @@ namespace ExamC__Javascript
                     if (Validations.EmptyNull(emailAddress) == true)
                     {
                         Console.WriteLine("**This Field is Required**");
-                        Console.Write("Enter Last name : ");
+                        Console.Write("Enter Email Address : ");
                         emailAddress = Console.ReadLine();
 
                     }
@@ -413,6 +413,7 @@ namespace ExamC__Javascript
                             department = Convert.ToString(DesignationType.Marketing);
                             flag = false;
                         }
+                        
 
                     }
                     catch (Exception ex)
@@ -448,10 +449,12 @@ namespace ExamC__Javascript
 
 
 
-                //8 salary
-               
+              //8  salary
+
+                salary = 0;
                 bool salaryFlag = true;
-                while (salaryFlag == true)
+
+                while (salaryFlag)
                 {
                     try
                     {
@@ -460,23 +463,25 @@ namespace ExamC__Javascript
 
                         if (int.TryParse(salaryInput, out salary))
                         {
-                           Console.WriteLine(salary);
-                            if ( salary < 10000 || salary > 500000)
+                            if (salary >= 10000 && salary <= 500000)
                             {
                                 salaryFlag = false;
+                                Console.WriteLine($"Your salary is {salary}.");
+                            }
+                            else
+                            {
+                                Console.WriteLine("Invalid input. Please enter a valid salary within the range of 10,000 to 500,000.");
                             }
                         }
                         else
                         {
                             Console.WriteLine("Invalid input. Please enter a valid integer number.");
-                            salaryFlag = true;
                         }
-
-
-                       
                     }
-                    catch (Exception ex) { Console.WriteLine(ex.Message); }
-
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine(ex.Message);
+                    }
                 }
 
 
@@ -635,67 +640,65 @@ namespace ExamC__Javascript
                     Console.WriteLine(ex.Message);
                 }
 
-                //if (employeeRecord.Count > 0)
-                //{
-                //    foreach (var employee in employeeRecord)
-                //    {
-                //        Console.WriteLine("\nEmployee Details Are....");
-                //        Console.WriteLine(" FirstName : " + employee.FullName);
-                //        Console.WriteLine(" LastName : " + employee.EmailAddress);
-                //        Console.WriteLine(" LastName : " + employee.PhoneNumber);
-                //        Console.WriteLine(" Degignation : " + employee.Designation);
-                //        Console.WriteLine(" Salary : " + employee.Salary);
-                //    }
-                //}
-                //else
-                //{
-                //    Console.WriteLine("There is no employees");
-                //}
-
             }
 
-            //public static bool CheckDuplictes(int id)
-            //{
-            //    string filePath = ConfigurationManager.AppSettings["FilePath"];
+
+            public static void DeleteEmployees()
+            {
+                string filePath = ConfigurationManager.AppSettings["FilePath"];
+
+                string jsonFile = "";
+                if (File.Exists(filePath))
+                {
+                    jsonFile = File.ReadAllText(filePath);
+
+                    var employeeList = JsonConvert.DeserializeObject<List<EmployeeData>>(jsonFile);
+
+                    //Console.WriteLine("Enter the ID of the employee to remove:");
+                    int id = 0;
+
+                    bool checkStudentID = true;
+                    while (checkStudentID)
+                    {
+                        try
+                        {
+                            Console.Write("Please Enter employee id : ");
+                            id = Convert.ToInt32(Console.ReadLine());
+                            checkStudentID = false;
+                        }
+                        catch (Exception ex)
+                        {
+                            Console.WriteLine(ex.Message);
+                        }
+
+                    }
 
 
-            //    string jsonFile = "";
-            //    if (File.Exists(filePath))
-            //    {
-            //        jsonFile = File.ReadAllText(filePath);
-
-            //        var fileArray = JArray.Parse(jsonFile);
-
-            //        foreach (var em in fileArray)
-            //        {
-            //            try
-            //            {
-            //                Console.WriteLine(em["EmployeeID"]);
-
-            //            }
-            //            catch (Exception ex)
-            //            {
-            //                Console.WriteLine(ex.Message);
-            //            }
-            //        }
 
 
 
 
-            //        //List<JObject> objects = JArray.Parse(jsonFile).Cast<JObject>().ToList();
 
-            //        //// Sort the list based on the "id" element
-            //        //objects = objects.OrderByDescending(o => o["Salary"]).ToList();
+                    // Find the employee in the list with the matching ID and remove it
+                    EmployeeData employeeToRemove = employeeList.FirstOrDefault(e => e.EmployeeID == id);
+                    if (employeeToRemove != null)
+                    {
+                        employeeList.Remove(employeeToRemove);
+                        Console.WriteLine("Employee Record Deleted");
+                    }
+                    else
+                    {
+                        Console.WriteLine($"Employee with ID {id} not found.");
+                    }
 
-            //        //foreach (JObject obj in objects)
-            //        //{
-            //        //    Console.WriteLine($"id: {obj["Salary"]}, age: {obj["age"]}");
-            //        //}
+                    // Serialize the updated employee list back to JSON
+                    string updatedJson = JsonConvert.SerializeObject(employeeList, Formatting.Indented);
 
-            //    }
-            //    return true;
-            //}
+                    // Write the updated JSON back to the file
+                    File.WriteAllText(filePath, updatedJson);
+                }
 
+            }
 
             public static bool CheckDuplicates(int id)
             {
@@ -769,7 +772,6 @@ namespace ExamC__Javascript
 
 
                 Console.WriteLine("Choose options");
-                Console.WriteLine("1 --> **Create a C# Console application which creates Employee record and store in json file.** ");
 
                 bool exitProgram = false;
                 while (!exitProgram)
@@ -781,8 +783,11 @@ namespace ExamC__Javascript
 
                     do
                     {
-
-                        Console.WriteLine("Select 1, 2 ,3 ,4");
+                        Console.WriteLine("1. Add Employee Details");
+                        Console.WriteLine("2. Delete Employee Details");
+                        Console.WriteLine("3. Exit Program");
+                        Console.WriteLine(" ");
+                        Console.WriteLine("Select 1, 2 ,3 ");
                         int userInput = int.Parse(Console.ReadLine());
 
                         if (userInput == 1)
@@ -802,6 +807,7 @@ namespace ExamC__Javascript
                         if (userInput == 2)
                         {
                             Console.WriteLine("2. Delete Data");
+                            EmployeeData.DeleteEmployees();
                             Console.WriteLine("You want to do someting else. If Yes then type y else n for No;");
                             inputAddStudents = Console.ReadLine();
                         }
@@ -824,9 +830,9 @@ namespace ExamC__Javascript
 
                                 // Write the sorted data back to the file
                                 File.WriteAllText(filePath, sortedJsonData);
+                                exitProgram = true;
                                 Console.WriteLine("You want to do someting else. If Yes then type y else n for No;");
                                 inputAddStudents = Console.ReadLine();
-                                exitProgram = true;
                             }
                         }
 
