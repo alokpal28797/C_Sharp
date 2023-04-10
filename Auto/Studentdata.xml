@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfStudentEntity xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <StudentEntity>
+    <FirstName>a</FirstName>
+    <LastName>a</LastName>
+    <FullName>a a</FullName>
+    <Gender>f</Gender>
+    <Email>a@gmail.com</Email>
+    <Phonenumber>1</Phonenumber>
+    <StudentID>1</StudentID>
+  </StudentEntity>
+</ArrayOfStudentEntity>
