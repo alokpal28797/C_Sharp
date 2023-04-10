@@ -364,7 +364,7 @@ namespace ExamC__Javascript
                 bool flag = true;
                 while (flag == true)
                 {
-                    Console.Write("Enter employee Department ( Developer, QA, Marketing, SEO, HR, Sales) : ");
+                    Console.Write("Enter employee Department ( Development, QA, Marketing, SEO, HR, Sales) : ");
                     try
                     {
                         department = Console.ReadLine().ToLower().Trim();
@@ -372,14 +372,14 @@ namespace ExamC__Javascript
                         if (Validations.EmptyNull(department) == true)
                         {
                             Console.WriteLine("**This Field is Required**");
-                            Console.Write("Enter employee Department ( Developer, QA, Marketing, SEO, HR, Sales) : ");
+                            Console.Write("Enter employee Department ( Development, QA, Marketing, SEO, HR, Sales) : ");
                             department = Console.ReadLine().ToLower().Trim();
 
                         }
                         if (Validations.IsString(department) == false)
                         {
                             Console.WriteLine("**Integer is not Allowed in Name **");
-                            Console.Write("Enter employee Department ( Developer, QA, Marketing, SEO, HR, Sales) : ");
+                            Console.Write("Enter employee Department ( Development, QA, Marketing, SEO, HR, Sales) : ");
                             department = Console.ReadLine().ToLower().Trim();
                         }
 
