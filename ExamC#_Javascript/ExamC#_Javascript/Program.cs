@@ -706,10 +706,10 @@ namespace ExamC__Javascript
                 {
                     jsonFile = File.ReadAllText(filePath);
 
-                    var people = JsonConvert.DeserializeObject<List<EmployeeData>>(jsonFile);
+                    var employeeID = JsonConvert.DeserializeObject<List<EmployeeData>>(jsonFile);
 
                     // Check if the given id already exists in the list of employees
-                    bool idExists = people.Any(p => p.EmployeeID == id);
+                    bool idExists = employeeID.Any(p => p.EmployeeID == id);
 
                     if (idExists)
                     {
