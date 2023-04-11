@@ -56,7 +56,7 @@ namespace ExamC__Javascript
 
         public static bool CorrectEmail(this string str)
         {
-            Regex emailRegex = new Regex(@"^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$");
+            Regex emailRegex = new Regex(@"^[\w-\.]+@([\w-]+\.)+(com|in|org|co)$");
             bool Correctemail = emailRegex.IsMatch(str);
             if (Correctemail)
             {
@@ -171,23 +171,24 @@ namespace ExamC__Javascript
             public string City { get; set; }
             public string Postalcode { get; set; }
             public string DateOfJoining { get; set; }
+            public string DateOfBirth { get; set; }
             public int Experience
             {
                 get
                 {
                     //// Calculate the difference between the current date and the date of joining
-                    TimeSpan span = DateTime.Today - DateTime.Parse( DateOfJoining);
+                    TimeSpan span = DateTime.Today - DateTime.Parse(DateOfJoining);
                     string yrs = "years";
                     //// Return the number of years as an integer
                     return (int)((span.TotalDays / 365.25));
-               }
+                }
             }
             public string Remarks { get; set; }
 
-            public int EmployeeID { get; set; } 
+            public int EmployeeID { get; set; }
 
 
-            public EmployeeData(string fullName, string gender, string emailAddress, string phoneNumber, string department, string designation, int salary, string state ,string city , string postalcode , string dateOfJoining , string remarks, int employeeID)
+            public EmployeeData(string fullName, string gender, string emailAddress, string phoneNumber, string department, string designation, int salary, string state, string city, string postalcode, string dateOfJoining, string remarks, int employeeID, string dateOfBirth)
             {
                 this.FullName = fullName;
                 this.Gender = gender;
@@ -198,10 +199,11 @@ namespace ExamC__Javascript
                 this.Salary = salary;
                 this.State = state;
                 this.City = city;
-                this.Postalcode = postalcode; 
-                this.DateOfJoining = dateOfJoining; 
+                this.Postalcode = postalcode;
+                this.DateOfJoining = dateOfJoining;
                 this.Remarks = remarks;
                 this.EmployeeID = employeeID;
+                DateOfBirth = dateOfBirth;
             }
 
             public static List<EmployeeData> AddEmployees(List<EmployeeData> employeeRecord)
@@ -219,6 +221,7 @@ namespace ExamC__Javascript
                 string dateTime = "";
                 string remarks = "";
                 int employeeID = 0;
+                string dateOfBirth = "";
 
 
 
@@ -248,6 +251,41 @@ namespace ExamC__Javascript
 
                 }
 
+                //14 date of birth
+
+              string dateFormat = "dd/MM/yyyy";
+DateTime today = DateTime.Today;
+
+while (true)
+{
+    Console.Write("Enter date of Birth (dd/MM/yyyy): ");
+    string dateStr = Console.ReadLine();
+    if (DateTime.TryParseExact(dateStr, dateFormat, CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime date))
+    {
+        // Calculate the age of the user based on the date of birth
+        int age = today.Year - date.Year;
+        if (date > today.AddYears(-age))
+        {
+            age--;
+        }
+
+        if (age >= 18)
+        {
+            Console.WriteLine("You are old enough to proceed.");
+            dateOfBirth = date.ToFormattedString();
+            Console.WriteLine(dateOfBirth);
+            break; // Exit the loop since a valid date has been entered
+        }
+        else
+        {
+            Console.WriteLine("Sorry, you must be at least 18 years old to proceed.");
+        }
+    }
+    else
+    {
+        Console.WriteLine($"Invalid date format! Please enter the date in the format: {dateFormat}");
+    }
+}
 
 
 
@@ -378,7 +416,7 @@ namespace ExamC__Javascript
                         }
                         if (Validations.IsString(department) == false)
                         {
-                            Console.WriteLine("**Integer is not Allowed in Name **");
+                            Console.WriteLine("**Integer is not Allowed in Department Name **");
                             Console.Write("Enter employee Department ( Development, QA, Marketing, SEO, HR, Sales) : ");
                             department = Console.ReadLine().ToLower().Trim();
                         }
@@ -413,7 +451,7 @@ namespace ExamC__Javascript
                             department = Convert.ToString(DesignationType.Marketing);
                             flag = false;
                         }
-                        
+
 
                     }
                     catch (Exception ex)
@@ -449,7 +487,7 @@ namespace ExamC__Javascript
 
 
 
-              //8  salary
+                //8  salary
 
                 salary = 0;
                 bool salaryFlag = true;
@@ -534,11 +572,11 @@ namespace ExamC__Javascript
 
 
                 // 11 date
-                
-                string dateFormat = "dd/MM/yyyy";
+
+                 dateFormat = "dd/MM/yyyy";
                 while (true)
                 {
-                    Console.Write("Enter date of joining (dd/MM/yyyy): ");
+                    Console.Write("Enter date of Joining (dd/MM/yyyy): ");
                     string dateStr = Console.ReadLine();
 
                     // Parse the date string using the TryParseExact method and validate the format
@@ -585,7 +623,7 @@ namespace ExamC__Javascript
 
                 Console.Write("Enter Remarks here : ");
                 remarks = Console.ReadLine();
-                while (Validations.EmptyNull(remarks) == true )
+                while (Validations.EmptyNull(remarks) == true)
                 {
                     if (Validations.EmptyNull(remarks) == true)
                     {
@@ -598,14 +636,15 @@ namespace ExamC__Javascript
 
                 }
 
-
                
-              
+
+
+
 
 
                 // Add Data
 
-                EmployeeData employee = new EmployeeData(fullName, gender, emailAddress, phoneNumber, department, designation, salary, state, city, postalcode, dateTime , remarks, employeeID);
+                EmployeeData employee = new EmployeeData(fullName, gender, emailAddress, phoneNumber, department, designation, salary, state, city, postalcode, dateTime, remarks, employeeID , dateOfBirth);
 
                 employeeRecord.Add(employee);
                 string result = JsonConvert.SerializeObject(employeeRecord);
@@ -729,7 +768,7 @@ namespace ExamC__Javascript
         static void Main(string[] args)
         {
             {
-                
+
                 List<EmployeeData> employeeRecord = new List<EmployeeData>();
                 List<EmployeeData> people = new List<EmployeeData>();
                 string filePath = ConfigurationManager.AppSettings["FilePath"];
@@ -767,7 +806,7 @@ namespace ExamC__Javascript
                     File.WriteAllText(filePath, sortedJsonData);
                 }
 
-                
+
 
 
 
@@ -794,6 +833,25 @@ namespace ExamC__Javascript
                         {
                             Console.WriteLine("1. Add Employee Record ");
                             employeeRecord = EmployeeData.AddEmployees(employeeRecord);
+
+                            jsonFile = "";
+                            if (File.Exists(filePath))
+                            {
+                                jsonFile = File.ReadAllText(filePath);
+
+                                var filearray = JArray.Parse(jsonFile);
+
+                                string jsonData = File.ReadAllText(filePath);
+                                people = JsonConvert.DeserializeObject<List<EmployeeData>>(jsonData);
+
+                                var sortedList = people.OrderByDescending(p => p.Salary);
+
+                                // Serialize the sorted list back to JSON
+                                string sortedJsonData = JsonConvert.SerializeObject(sortedList, Formatting.Indented);
+
+                                // Write the sorted data back to the file
+                                File.WriteAllText(filePath, sortedJsonData);
+                            }
                             Console.WriteLine("You want to do someting else. If Yes then type y else n for No;");
                             inputAddStudents = Console.ReadLine();
                         }
@@ -813,27 +871,11 @@ namespace ExamC__Javascript
                         }
                         if (userInput == 3)
                         {
-                            jsonFile = "";
-                            if (File.Exists(filePath))
-                            {
-                                jsonFile = File.ReadAllText(filePath);
 
-                                var filearray = JArray.Parse(jsonFile);
-
-                                string jsonData = File.ReadAllText(filePath);
-                                people = JsonConvert.DeserializeObject<List<EmployeeData>>(jsonData);
-
-                                var sortedList = people.OrderByDescending(p => p.Salary);
-
-                                // Serialize the sorted list back to JSON
-                                string sortedJsonData = JsonConvert.SerializeObject(sortedList, Formatting.Indented);
-
-                                // Write the sorted data back to the file
-                                File.WriteAllText(filePath, sortedJsonData);
-                                exitProgram = true;
-                                Console.WriteLine("You want to do someting else. If Yes then type y else n for No;");
-                                inputAddStudents = Console.ReadLine();
-                            }
+                            exitProgram = true;
+                            Console.WriteLine("You want to do someting else. If Yes then type y else n for No;");
+                            inputAddStudents = Console.ReadLine();
+                            // }
                         }
 
                     } while (inputAddStudents == "y");
